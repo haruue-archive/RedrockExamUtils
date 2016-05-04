@@ -37,7 +37,7 @@ public class PrivateMethodInvoker {
      *     <b>注意：</b>此方法适用于参数中只含有<b>非基本类型</b>参数的情况，如果参数列表中含有基本类型（如 int），请使用{@link PrivateMethodInvoker#invoke(Object, String, Class[], Object...)}，否则将会抛出{@link NoSuchMethodException}。
      * @param object 反射的目标对象
      * @param methodName 方法名
-     * @param param 参数数组
+     * @param param 参数数组，无参数请传入 (Object[]) null
      * @return 调用成功之后的函数返回值
      * @throws NoSuchMethodException 没有这种方法
      * @throws InvocationTargetException 调用的方法中产生异常
@@ -55,8 +55,8 @@ public class PrivateMethodInvoker {
      * 调用私有方法，此方法适用于所有情况
      * @param object 反射的目标对象
      * @param methodName 方法名
-     * @param paramClass 参数的{@link Class}数组，基本类型请使用类似于{@link Integer#TYPE}的形式
-     * @param param 参数数组
+     * @param paramClass 参数的{@link Class}数组，基本类型请使用类似于{@link Integer#TYPE}的形式，无参数请传入 (Class[]) null
+     * @param param 参数数组，无参数请传入 (Object[]) null
      * @return 调用成功之后的函数返回值
      * @throws NoSuchMethodException 没有这种方法
      * @throws InvocationTargetException 调用的方法中产生异常

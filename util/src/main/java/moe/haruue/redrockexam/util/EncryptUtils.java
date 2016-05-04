@@ -1,10 +1,15 @@
 package moe.haruue.redrockexam.util;
 
+import android.support.annotation.Nullable;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 加密、散列、编码解码解决方案工具类<br>
@@ -230,15 +235,21 @@ public class EncryptUtils {
         }
     }
 
+
+    // TODO: 找到一种更好的 Unicode 转码方案
+
     /**
      * 将可读的字符串转换为 Unicode 编码字符串<br>
      *     例如： {@code 春上冰月 -> \u6625\u4e0a\u51b0\u6708}
      * @param s 需要转码的字符串
      * @return 所需的 Unicode 编码的字符串
+     * @deprecated 不完全转换
      */
+    @Deprecated
     public static String nativeToAscii(String s) {
         StringBuilder sb = new StringBuilder();
         for (char ch: s.toCharArray()) {
+            if (Pattern.matches("[A-Za-z0-9]", ch + "")) continue;
             sb.append("\\u").append(Integer.toHexString(ch));
         }
         return sb.toString();
@@ -249,14 +260,40 @@ public class EncryptUtils {
      *     例如：{@code \u6625\u4e0a\u51b0\u6708 -> 春上冰月}
      * @param ascii 需要转码的 Unicode 字符串
      * @return 所需的可读字符串
+     * @deprecated 不完全转换
      */
+    @Deprecated
     public static String asciiToNative(String ascii) {
-        int n = ascii.length() / 6;
-        StringBuilder sb = new StringBuilder(n);
-        for (int i = 0, j = 2; i < n; i++, j += 6) {
-            String code = ascii.substring(j, j + 4);
-            char ch = (char) Integer.parseInt(code, 16);
-            sb.append(ch);
+        Matcher matcher = Pattern.compile("\\\\[Uu](....)").matcher(ascii);
+        matcher.reset();
+        StringBuffer buffer = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(buffer, (char) Integer.parseInt(matcher.group(1), 16) + "");
+        }
+        return matcher.appendTail(buffer).toString();
+    }
+
+    /**
+     * 使用前缀和参数获取完整 URL
+     * @param url URL 接口前缀，如果没有的话可以传入空值
+     * @param fieldMap 参数 Map
+     * @return 完整的 URL
+     */
+    public static String gainCompleteUrl(@Nullable String url, Map<?, ?> fieldMap) {
+        boolean isFirst = false;
+        url = StandardUtils.defaultObject(url, "");
+        if (!Pattern.matches(".*\\?.*", url)) {
+            isFirst = true;
+        }
+        StringBuilder sb = new StringBuilder(url);
+        for (Object k: fieldMap.keySet()) {
+            if (isFirst) {
+                sb.append("?");
+                isFirst = false;
+            } else {
+                sb.append("&");
+            }
+            sb.append(urlEncode(k.toString())).append("=").append(urlEncode(fieldMap.get(k).toString()));
         }
         return sb.toString();
     }

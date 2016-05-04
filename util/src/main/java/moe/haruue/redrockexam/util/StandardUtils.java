@@ -1,7 +1,6 @@
 package moe.haruue.redrockexam.util;
 
 import android.app.Application;
-import android.os.Handler;
 
 import java.util.Locale;
 
@@ -15,7 +14,6 @@ public class StandardUtils {
     private static StandardUtils utils;
 
     private Application application;
-    private Handler handler;
 
     private StandardUtils() {
 
@@ -29,7 +27,6 @@ public class StandardUtils {
     public static void initialize(Application application) {
         utils = new StandardUtils();
         utils.application = application;
-        utils.handler = new Handler(application.getMainLooper());
     }
 
     /**
@@ -38,25 +35,6 @@ public class StandardUtils {
      */
     public static Application getApplication() {
         return utils.application;
-    }
-
-    /**
-     * 在新线程中运行
-     * @param runnable 需要运行的 {@link Runnable}实例
-     * @return 正在运行的 {@link Thread}实例
-     */
-    public static Thread runOnNewThread(Runnable runnable) {
-        Thread thread = new Thread(runnable);
-        thread.start();
-        return thread;
-    }
-
-    /**
-     * 在主线程（UI 线程）中运行
-     * @param runnable 需要运行的 {@link Runnable}实例
-     */
-    public static void runOnUIThread(Runnable runnable) {
-        utils.handler.post(runnable);
     }
 
     /**

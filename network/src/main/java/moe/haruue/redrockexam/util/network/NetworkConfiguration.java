@@ -36,6 +36,11 @@ public class NetworkConfiguration {
         return configuration.get(Configurations.REQUEST_METHOD);
     }
 
+    /**
+     * 设置连接超时时间，默认为 30 秒
+     * @param timeout 连接超时时间
+     * @return 修饰者模式的 this 引用
+     */
     public NetworkConfiguration setConnectTimeout(int timeout) {
         configuration.put(Configurations.CONNECT_TIMEOUT, timeout + "");
         return this;
@@ -50,6 +55,11 @@ public class NetworkConfiguration {
         }
     }
 
+    /**
+     * 设置读取超时时间，默认为 60 秒
+     * @param timeout 读取超时时间
+     * @return 修饰者模式的 this 引用
+     */
     public NetworkConfiguration setReadTimeout(int timeout) {
         configuration.put(Configurations.READ_TIMEOUT, timeout + "");
         return this;
@@ -64,6 +74,11 @@ public class NetworkConfiguration {
         }
     }
 
+    /**
+     * 获取写入超时时间，默认为 60 秒
+     * @param timeout 写入超时时间
+     * @return 修饰者模式的 this 引用
+     */
     public NetworkConfiguration setWriteTimeout(int timeout) {
         configuration.put(Configurations.WRITE_TIMEOUT, timeout + "");
         return this;
