@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">HumanUnit</string>
-    <string name="times_ago_format">%1$s前</string>
-    <string name="times_after_format">%1$s后</string>
     <string name="days">天</string>
     <string name="hours">小时</string>
     <string name="minutes">分钟</string>
-    <string name="seconds">秒</string>
     <string name="months">个月</string>
+    <string name="seconds">秒</string>
+    <string name="times_after_format">%1$s后</string>
+    <string name="times_ago_format">%1$s前</string>
     <string name="years">年</string>
     <string name="just_now">刚刚</string>
     <string name="soon">即将</string>

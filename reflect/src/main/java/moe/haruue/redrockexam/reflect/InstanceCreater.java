@@ -33,9 +33,14 @@ public class InstanceCreater {
      * @throws IllegalAccessException 非法访问异常，一般是安全管理器不允许此操作
      */
     public static <T> T getInstance(Class<T> objectClass, Object...param) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        Class[] paramClass = new Class[param.length];
-        for (int i = 0; i < param.length; i++) {
-            paramClass[i] = param.getClass();
+        Class[] paramClass;
+        if (param != null) {
+            paramClass = new Class[param.length];
+            for (int i = 0; i < param.length; i++) {
+                paramClass[i] = param.getClass();
+            }
+        } else {
+            paramClass = null;
         }
         return getInstance(objectClass, paramClass, param);
     }

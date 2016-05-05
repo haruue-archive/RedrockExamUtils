@@ -44,9 +44,14 @@ public class PrivateMethodInvoker {
      * @throws IllegalAccessException 非法访问权限，一般是安全管理器不允许此操作
      */
     public static Object invoke(Object object, String methodName, Object... param) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Class[] paramClass = new Class[param.length];
-        for (int i = 0; i < param.length; i++) {
-            paramClass[i] = param[i].getClass();
+        Class[] paramClass;
+        if (param != null) {
+            paramClass = new Class[param.length];
+            for (int i = 0; i < param.length; i++) {
+                paramClass[i] = param[i].getClass();
+            }
+        } else {
+            paramClass = null;
         }
         return invoke(object, methodName, paramClass, param);
     }

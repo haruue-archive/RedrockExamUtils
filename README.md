@@ -24,3 +24,6 @@
 
 ## reflect
 更方便的反射
+
+## permission
+更方便地申请 Android M 运行时权限
