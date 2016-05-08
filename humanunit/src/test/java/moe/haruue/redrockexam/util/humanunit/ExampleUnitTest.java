@@ -2,14 +2,12 @@ package moe.haruue.redrockexam.util.humanunit;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        System.out.println(ByteHumanFormatter.formatByteSize(3255555, ByteHumanFormatter.BIN, ByteHumanFormatter.DEC_UNIT));
     }
 }

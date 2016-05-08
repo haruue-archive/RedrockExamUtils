@@ -1,6 +1,9 @@
 package moe.haruue.redrockexam.util;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 
 import java.util.Locale;
 
@@ -63,6 +66,15 @@ public class StandardUtils {
      */
     public static <T> T defaultObject(T o, T defaultObject) {
         return o == null ? defaultObject : o;
+    }
+
+    /**
+     * 复制文本到剪贴板
+     * @param text 需要复制到剪贴板的文本
+     */
+    public static void copyToClipboard(String text){
+        ClipboardManager clipboardManager = (ClipboardManager) utils.application.getSystemService(Activity.CLIPBOARD_SERVICE);
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(utils.application.getPackageName(), text));
     }
 
 }

@@ -4,13 +4,14 @@ import android.content.Context;
 import android.content.res.Resources;
 
 /**
+ * 人类可读性时间戳转换器
  * @author Haruue Icymoon haruue@caoyue.com.cn
  */
 public class TimeHumanFormater {
 
     /**
      * 将时间差格式化成人类可读格式
-     * @param context {@link android.app.Activity} 的 this 引用
+     * @param context 任何的 {@link Context} 引用
      * @param interval 时间差，秒数，正数将被格式化成“???后”，负数将会被格式化成“???前”
      * @return 格式化好的时间差字符串
      */

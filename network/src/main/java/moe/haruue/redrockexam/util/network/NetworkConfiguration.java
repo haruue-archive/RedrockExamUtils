@@ -3,7 +3,7 @@ package moe.haruue.redrockexam.util.network;
 import java.util.HashMap;
 
 /**
- * 网络配置，这个类类使用修饰者模式
+ * 网络配置，这个类使用修饰者模式
  * @author Haruue Icymoon haruue@caoyue.com.cn
  */
 public class NetworkConfiguration {
@@ -33,7 +33,7 @@ public class NetworkConfiguration {
     }
 
     String getRequestMethod() {
-        return configuration.get(Configurations.REQUEST_METHOD);
+        return defaultObject(configuration.get(Configurations.REQUEST_METHOD), "GET");
     }
 
     /**
@@ -51,7 +51,7 @@ public class NetworkConfiguration {
             return Integer.parseInt(configuration.get(Configurations.CONNECT_TIMEOUT));
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return -1;
+            return 30;
         }
     }
 
@@ -70,7 +70,7 @@ public class NetworkConfiguration {
             return Integer.parseInt(configuration.get(Configurations.READ_TIMEOUT));
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return -1;
+            return 60;
         }
     }
 
@@ -89,7 +89,7 @@ public class NetworkConfiguration {
             return Integer.parseInt(configuration.get(Configurations.WRITE_TIMEOUT));
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return -1;
+            return 60;
         }
     }
 

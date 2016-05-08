@@ -281,6 +281,9 @@ public class EncryptUtils {
      */
     public static String gainCompleteUrl(@Nullable String url, Map<?, ?> fieldMap) {
         boolean isFirst = false;
+        if (fieldMap == null || fieldMap.isEmpty()) {
+            return url;
+        }
         url = StandardUtils.defaultObject(url, "");
         if (!Pattern.matches(".*\\?.*", url)) {
             isFirst = true;

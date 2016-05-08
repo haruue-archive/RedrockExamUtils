@@ -15,8 +15,8 @@ public class NetworkUtils {
 
     }
 
-    private Application application;
-    private NetworkConfiguration defaultConfiguration;
+    Application application;
+    NetworkConfiguration defaultConfiguration;
 
     /**
      * 初始化网络工具<br>
@@ -28,6 +28,14 @@ public class NetworkUtils {
         utils = new NetworkUtils();
         utils.application = application;
         utils.defaultConfiguration = defaultConfiguration;
+    }
+
+    /**
+     * 获取网络工具的实例（并没有什么卵用）
+     * @return 网络工具的实例
+     */
+    public static NetworkUtils getInstance() {
+        return utils;
     }
 
 }
