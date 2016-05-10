@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.support.annotation.IdRes;
+import android.util.Log;
+import android.view.View;
 
 import java.util.Locale;
 
 /**
  * 标准工具类 <br>
- *     这个类必须在{@link Application}的子类里初始化，使用 {@link StandardUtils#initialize(Application)}，参数直接传入 this 即可。
+ *     这个类必须在{@link Application}的子类里初始化，使用 {@link StandardUtils#initialize(Application)}，参数直接传入 this 即可。<br>
+ *     也可继承 {@link moe.haruue.redrockexam.util.abstracts.HaruueApplication} 而无需再次初始化。
  * @author Haruue Icymoon haruue@caoyue.com.cn
  */
 public class StandardUtils {
@@ -18,13 +22,15 @@ public class StandardUtils {
 
     private Application application;
 
+    private Activity activity;
+
     private StandardUtils() {
 
     }
 
     /**
      * 初始化标准工具类<br>
-     *     必须在{@link Application}的子类里完成初始化操作，直接传入 this
+     *     必须在{@link Application}的子类里完成初始化操作，直接传入 this ，也可继承 {@link moe.haruue.redrockexam.util.abstracts.HaruueApplication} 则无需初始化
      * @param application {@link Application}的子类中的 this 对象
      */
     public static void initialize(Application application) {
@@ -33,11 +39,57 @@ public class StandardUtils {
     }
 
     /**
+     * 在每个 Activity 中初始化<br>
+     *     必须在 {@link Activity} 的子类里完成初始化操作，直接传入 this ，也可继承 {@link moe.haruue.redrockexam.util.abstracts.HaruueActivity} 则无需初始化
+     * @param activity
+     */
+    public static void initializeInActivity(Activity activity) {
+        utils.activity = activity;
+    }
+
+    /**
+     * 打印 Log ，以 Activity 的类名为 tag
+     * @param message log 的内容
+     */
+    public static void log(CharSequence message) {
+        if (BuildConfig.DEBUG) {
+            Log.d(utils.activity.getLocalClassName(), message.toString());
+        }
+    }
+
+    /**
+     * 打印 log
+     * @param tag 指定的 tag
+     * @param message log 的内容
+     */
+    public static void log(CharSequence tag, CharSequence message) {
+        Log.d(tag.toString(), message.toString());
+    }
+
+    /**
+     * 当前 Activity 中的 {@link Activity#findViewById(int)}
+     * @param resourceId 需要 find 的 Id
+     * @param <T> View 类型
+     * @return 需要的 View ，已经进行强制类型转换
+     */
+    public static <T extends View> T $(@IdRes int resourceId) {
+        return (T) utils.activity.findViewById(resourceId);
+    }
+
+    /**
      * 在任何地方获取应用的{@link Application}
      * @return 应用的 {@link Application}实例
      */
     public static Application getApplication() {
         return utils.application;
+    }
+
+    /**
+     * 在任何地方获取当前 Activity 实例
+     * @return 当前 {@link Activity} 实例
+     */
+    public static Activity getActivity() {
+        return utils.activity;
     }
 
     /**

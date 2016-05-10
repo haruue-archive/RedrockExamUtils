@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import moe.haruue.redrockexam.util.ActivityManager;
 import moe.haruue.redrockexam.util.InstanceSaver;
+import moe.haruue.redrockexam.util.StandardUtils;
 import moe.haruue.redrockexam.util.ThreadUtils;
 
 /**
@@ -18,6 +19,7 @@ public abstract class HaruueActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityManager.push(this);
+        StandardUtils.initializeInActivity(this);
     }
 
     @Override
