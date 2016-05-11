@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -80,6 +85,38 @@ public class StandardUtils {
     }
 
     /**
+     * 显示一个短时 Toast
+     * @param text Toast 内容
+     */
+    public static void toast(CharSequence text) {
+        Toast.makeText(utils.application, text, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 显示一个短时 Toast
+     * @param resId Toast 内容
+     */
+    public static void toast(@StringRes int resId) {
+        Toast.makeText(utils.application, resId, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 显示一个长时 Toast
+     * @param text Toast 内容
+     */
+    public static void toastLong(CharSequence text) {
+        Toast.makeText(utils.application, text, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * 显示一个长时 Toast
+     * @param resId Toast 内容
+     */
+    public static void toastLong(@StringRes int resId) {
+        Toast.makeText(utils.application, resId, Toast.LENGTH_LONG).show();
+    }
+
+    /**
      * 当前 Activity 中的 {@link Activity#findViewById(int)}
      * @param resourceId 需要 find 的 Id
      * @param <T> View 类型
@@ -140,6 +177,15 @@ public class StandardUtils {
     public static void copyToClipboard(String text){
         ClipboardManager clipboardManager = (ClipboardManager) utils.application.getSystemService(Activity.CLIPBOARD_SERVICE);
         clipboardManager.setPrimaryClip(ClipData.newPlainText(utils.application.getPackageName(), text));
+    }
+
+    /**
+     * 通过 Drawable Resource Id 获取此 Drawable Resource 的 Bitmap<br>
+     * @param res 指定的 Drawable Resource Id
+     * @return 获取的 Bitmap
+     */
+    public static Bitmap getDrawableResourceAsBitmap(@DrawableRes int res) {
+        return BitmapFactory.decodeResource(getApplication().getResources(), res);
     }
 
 }
