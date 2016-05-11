@@ -1,1 +1,1 @@
-include ':test', ':network', ':recyclerview', ':humanunit', ':util', ':database', ':file', ':reflect', ':permission'
+include ':test', ':network', ':recyclerview', ':humanunit', ':util', ':database', ':file', ':reflect', ':permission', ':widget'

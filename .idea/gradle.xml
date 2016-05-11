@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/reflect" />
             <option value="$PROJECT_DIR$/test" />
             <option value="$PROJECT_DIR$/util" />
+            <option value="$PROJECT_DIR$/widget" />
           </set>
         </option>
         <option name="myModules">
@@ -31,6 +32,7 @@
             <option value="$PROJECT_DIR$/reflect" />
             <option value="$PROJECT_DIR$/test" />
             <option value="$PROJECT_DIR$/util" />
+            <option value="$PROJECT_DIR$/widget" />
           </set>
         </option>
       </GradleProjectSettings>

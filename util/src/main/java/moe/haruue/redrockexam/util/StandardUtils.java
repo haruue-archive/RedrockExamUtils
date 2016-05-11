@@ -63,7 +63,20 @@ public class StandardUtils {
      * @param message log 的内容
      */
     public static void log(CharSequence tag, CharSequence message) {
-        Log.d(tag.toString(), message.toString());
+        if (BuildConfig.DEBUG) {
+            Log.d(tag.toString(), message.toString());
+        }
+    }
+
+    /**
+     * 对异常打印调用栈
+     * @param e 需要打印调用栈的异常
+     */
+    public static void printStack(Exception e) {
+        if (BuildConfig.DEBUG) {
+            Log.d(e.getClass().getSimpleName(), e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

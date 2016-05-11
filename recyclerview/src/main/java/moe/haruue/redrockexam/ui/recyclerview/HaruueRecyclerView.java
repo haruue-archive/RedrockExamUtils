@@ -66,6 +66,15 @@ public class HaruueRecyclerView extends FrameLayout {
         });
     }
 
+    public void refresh() {
+        showProgress();
+        onRefreshListener.onRefresh();
+    }
+
+    public void onLoadFinish() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
     public View getErrorView() {
         return errorView;
     }
@@ -105,6 +114,9 @@ public class HaruueRecyclerView extends FrameLayout {
     }
 
     protected void showReuseView(View view) {
+        if (view == null) {
+            return;
+        }
         reuseLayout.removeAllViews();
         reuseLayout.addView(view);
         recyclerView.setVisibility(GONE);
@@ -118,9 +130,24 @@ public class HaruueRecyclerView extends FrameLayout {
 
     public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
         this.onRefreshListener = onRefreshListener;
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
     }
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
     }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeRefreshLayout;
+    }
+
+    public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
+
+        recyclerView.setLayoutManager(layoutManager);
+    }
+
+    public void setItemAnimator(RecyclerView.ItemAnimator itemAnimator) {
+        recyclerView.setItemAnimator(itemAnimator);
+    }
+
 }
