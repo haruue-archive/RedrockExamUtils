@@ -29,3 +29,9 @@
 
 ## permission
 更方便地申请 Android M 运行时权限
+
+## widget
+CircleImageView 控件    
+
+## notification
+兼容性通知    
