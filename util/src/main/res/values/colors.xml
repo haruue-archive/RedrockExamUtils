@@ -5,7 +5,7 @@
 <resources>
 
     <!-- red -->
-    <color name="red_50">#F44336</color>
+    <color name="red_50">#FFEBEE</color>
     <color name="red_100">#FFCDD2</color>
     <color name="red_200">#EF9A9A</color>
     <color name="red_300">#E57373</color>

@@ -115,6 +115,8 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
 
     @Override
     public void onBindViewHolder(HaruueViewHolder holder, int position) {
+        // Skip header and footer
+        if (position == 0 || position > models.size()) return;
         holder.setData(models.get(position - 1));
     }
 
@@ -276,7 +278,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
     public int getItemViewType(int position) {
         if (position == 0) {
             return VIEW_TYPE_HEADER;
-        } else if (position == models.size()) {
+        } else if (position == models.size() + 1) {
             return VIEW_TYPE_FOOTER;
         } else {
             return super.getItemViewType(position);
@@ -388,5 +390,10 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
 
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
+    }
+
+    @Override
+    public int getItemCount() {
+        return models.size() + 2;
     }
 }

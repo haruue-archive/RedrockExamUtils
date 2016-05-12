@@ -57,6 +57,10 @@ public class HaruueRecyclerView extends FrameLayout {
         setEmptyView(typedArray.getResourceId(R.styleable.HaruueRecyclerView_layout_empty, 0));
     }
 
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        recyclerView.setAdapter(adapter);
+    }
+
     public void showProgress() {
         swipeRefreshLayout.post(new Runnable() {
             @Override

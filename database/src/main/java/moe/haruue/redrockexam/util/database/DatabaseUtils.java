@@ -8,14 +8,15 @@ import android.os.Handler;
 import java.util.ArrayList;
 
 /**
- * 更方便的数据库异步操作
+ * 更方便的数据库异步操作<br>
+ *     此工具类必须在 {@link Application} 的子类中使用 {@link #initialize(Application)} 方法初始化
  * @author Haruue Icymoon haruue@caoyue.com.cn
  */
 public class DatabaseUtils {
     static Application application;
     static Handler handler;
 
-    private static ArrayList<DatabaseUtils> utils;
+    private static ArrayList<DatabaseUtils> utils = new ArrayList<>(0);
 
     private String name;
     private int version;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HumanUnit</string>
     <string name="days">天</string>
     <string name="hours">小时</string>
     <string name="minutes">分钟</string>

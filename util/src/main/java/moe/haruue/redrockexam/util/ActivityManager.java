@@ -33,7 +33,7 @@ public class ActivityManager {
 
     private static ActivityManager manager;
 
-    private ArrayList<Activity> activities;
+    private ArrayList<Activity> activities = new ArrayList<>(0);
 
     private ActivityManager() {
 

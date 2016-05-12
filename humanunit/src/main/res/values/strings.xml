@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">HumanUnit</string>
     <string name="times_ago_format">%1$s前</string>
     <string name="times_after_format">%1$s后</string>
     <string name="days">天</string>

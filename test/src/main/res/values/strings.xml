@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RedrockExamUtilsTest</string>
+    <string name="error_retry">发生错误，请重试</string>
+    <string name="empty">这里还是空的</string>
 </resources>

@@ -1,8 +1,10 @@
 package moe.haruue.redrockexam.util.abstracts;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import moe.haruue.redrockexam.util.ActivityManager;
 import moe.haruue.redrockexam.util.InstanceSaver;
@@ -39,6 +41,16 @@ public abstract class HaruueActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityManager.pop(this);
         ThreadUtils.onActivityDestroy(this);
+    }
+
+    /**
+     * 替代 findViewById 更方便地 find View
+     * @param res 需要 find 的 Id
+     * @param <T> View 类型，自动强制类型转换
+     * @return 强制类型转换好的 View
+     */
+    protected <T extends View> T $(@IdRes int res) {
+        return (T) findViewById(res);
     }
 
 }
