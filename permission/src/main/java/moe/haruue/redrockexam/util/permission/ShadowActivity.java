@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * 用来获取权限的空白 Activity
  * @author Haruue Icymoon haruue@caoyue.com.cn
  */
-class ShadowActivity extends AppCompatActivity {
+public class ShadowActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override

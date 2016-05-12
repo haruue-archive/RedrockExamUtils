@@ -46,7 +46,7 @@ public class StandardUtils {
     /**
      * 在每个 Activity 中初始化<br>
      *     必须在 {@link Activity} 的子类里完成初始化操作，直接传入 this ，也可继承 {@link moe.haruue.redrockexam.util.abstracts.HaruueActivity} 则无需初始化
-     * @param activity
+     * @param activity {@link Activity} 中的 this
      */
     public static void initializeInActivity(Activity activity) {
         utils.activity = activity;
@@ -124,6 +124,17 @@ public class StandardUtils {
      */
     public static <T extends View> T $(@IdRes int resourceId) {
         return (T) utils.activity.findViewById(resourceId);
+    }
+
+    /**
+     * 指定 View 中的 {@link View#findViewById(int)}
+     * @param view 指定的 View
+     * @param resourceId 需要 find 的 Id
+     * @param <T> View 类型
+     * @return 需要的 View ，已经进行强制类型转换
+     */
+    public static <T extends View> T $(View view, @IdRes int resourceId) {
+        return (T) view.findViewById(resourceId);
     }
 
     /**

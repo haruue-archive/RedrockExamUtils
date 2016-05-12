@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/database" />
             <option value="$PROJECT_DIR$/file" />
             <option value="$PROJECT_DIR$/humanunit" />
+            <option value="$PROJECT_DIR$/imageprovider" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/notification" />
             <option value="$PROJECT_DIR$/permission" />
@@ -27,6 +28,7 @@
             <option value="$PROJECT_DIR$/database" />
             <option value="$PROJECT_DIR$/file" />
             <option value="$PROJECT_DIR$/humanunit" />
+            <option value="$PROJECT_DIR$/imageprovider" />
             <option value="$PROJECT_DIR$/network" />
             <option value="$PROJECT_DIR$/notification" />
             <option value="$PROJECT_DIR$/permission" />
