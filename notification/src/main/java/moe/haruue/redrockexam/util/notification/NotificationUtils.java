@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -25,7 +26,7 @@ public class NotificationUtils {
 
     }
 
-    public class Builder {
+    public static class Builder {
 
         Notification.Builder builder;
         Context context;
@@ -111,8 +112,13 @@ public class NotificationUtils {
             return this;
         }
 
-        public Builder setIntent(PendingIntent pendingIntent, boolean highPriority) {
+        public Builder setFullScreenIntent(PendingIntent pendingIntent, boolean highPriority) {
             builder.setFullScreenIntent(pendingIntent, highPriority);
+            return this;
+        }
+
+        public Builder setHeadsUpMode() {
+            builder.setFullScreenIntent(PendingIntent.getActivity(context, 0, new Intent(), PendingIntent.FLAG_CANCEL_CURRENT), true);
             return this;
         }
 

@@ -92,18 +92,18 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getViewHolderPositionWithoutHeader(viewHolder);
+                    int position = viewHolder.getModelPosition();
                     onItemClickListener.onItemClick(position, v, models.get(position));
                 }
             });
         }
 
         if (onItemLongClickListener != null) {
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
-                    int position = getViewHolderPositionWithoutHeader(viewHolder);
-                    onItemLongClickListener.onItemLongClick(position, v, models.get(position));
+                public boolean onLongClick(View v) {
+                    int position = viewHolder.getModelPosition();
+                    return onItemLongClickListener.onItemLongClick(position, v, models.get(position));
                 }
             });
         }
@@ -117,14 +117,14 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
     public void onBindViewHolder(HaruueViewHolder holder, int position) {
         // Skip header and footer
         if (position == 0 || position > models.size()) return;
-        holder.setData(models.get(position - 1));
+        holder.setData(models.get(adapterPositionToModelPosition(position)));
     }
 
     public void add(T model) {
         synchronized (threadLock) {
             models.add(model);
             if (isAutoNotify) {
-                notifyItemInserted(models.size() - 1);
+                notifyItemInserted(modelPositionToAdapterPosition(models.size() - 1));
             }
         }
     }
@@ -134,7 +134,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
             int before = this.models.size();
             this.models.addAll(Arrays.asList(models));
             if (isAutoNotify) {
-                notifyItemRangeInserted(before, models.length);
+                notifyItemRangeInserted(modelPositionToAdapterPosition(before), models.length);
             }
         }
     }
@@ -144,7 +144,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
             int before = this.models.size();
             this.models.addAll(models);
             if (isAutoNotify) {
-                notifyItemRangeInserted(before, models.size());
+                notifyItemRangeInserted(modelPositionToAdapterPosition(before), models.size());
             }
         }
     }
@@ -153,7 +153,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
         synchronized (threadLock) {
             this.models.add(position, model);
             if (isAutoNotify) {
-                notifyItemInserted(position);
+                notifyItemInserted(modelPositionToAdapterPosition(position));
             }
         }
     }
@@ -162,7 +162,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
         synchronized (threadLock) {
             this.models.addAll(position, Arrays.asList(models));
             if (isAutoNotify) {
-                notifyItemRangeInserted(position, models.length);
+                notifyItemRangeInserted(modelPositionToAdapterPosition(position), models.length);
             }
         }
     }
@@ -171,7 +171,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
         synchronized (threadLock) {
             this.models.addAll(position, models);
             if (isAutoNotify) {
-                notifyItemRangeInserted(position, models.size());
+                notifyItemRangeInserted(modelPositionToAdapterPosition(position), models.size());
             }
         }
     }
@@ -181,7 +181,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
             this.models.remove(position);
             this.models.add(position, model);
             if (isAutoNotify) {
-                notifyItemChanged(position);
+                notifyItemChanged(modelPositionToAdapterPosition(position));
             }
         }
     }
@@ -200,7 +200,7 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
         synchronized (threadLock) {
             models.remove(position);
             if (isAutoNotify) {
-                notifyItemRemoved(position);
+                notifyItemRemoved(modelPositionToAdapterPosition(position));
             }
         }
     }
@@ -267,11 +267,19 @@ public abstract class HaruueAdapter<T> extends RecyclerView.Adapter<HaruueViewHo
     }
 
     public interface OnItemLongClickListener<T> {
-        void onItemLongClick(int position, View view, T model);
+        boolean onItemLongClick(int position, View view, T model);
     }
 
-    public int getViewHolderPositionWithoutHeader(HaruueViewHolder viewHolder) {
-        return viewHolder.getAdapterPosition() - 1;
+    public void setOnItemLongClickListener(OnItemLongClickListener<T> onItemLongClickListener) {
+        this.onItemLongClickListener = onItemLongClickListener;
+    }
+
+    public static int adapterPositionToModelPosition(int adapterPosition) {
+        return adapterPosition - 1;
+    }
+
+    public static int modelPositionToAdapterPosition(int modelPosition) {
+        return modelPosition + 1;
     }
 
     @Override

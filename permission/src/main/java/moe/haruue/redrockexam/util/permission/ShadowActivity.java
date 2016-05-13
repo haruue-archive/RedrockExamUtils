@@ -30,6 +30,7 @@ public class ShadowActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         ArrayList<String> grantedPermissions = new ArrayList<>(0);
         ArrayList<String> deniedPermissions = new ArrayList<>(0);
+        String[] tempStrings = new String[1];
         for (int i = 0; i < permissions.length; i++) {
             if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                 grantedPermissions.add(permissions[i]);
@@ -38,10 +39,10 @@ public class ShadowActivity extends AppCompatActivity {
             }
         }
         if (!grantedPermissions.isEmpty()) {
-            RequestPermission.getInstance(this).listener.onPermissionGranted((String[]) grantedPermissions.toArray());
+            RequestPermission.getInstance(this).listener.onPermissionGranted(grantedPermissions.toArray(tempStrings));
         }
         if (!deniedPermissions.isEmpty()) {
-            RequestPermission.getInstance(this).listener.onPermissionDenied((String[]) deniedPermissions.toArray());
+            RequestPermission.getInstance(this).listener.onPermissionDenied(deniedPermissions.toArray(tempStrings));
         }
         //在此重置权限获取工具
         RequestPermission.reset();

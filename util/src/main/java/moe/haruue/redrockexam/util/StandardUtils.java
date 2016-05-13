@@ -29,6 +29,8 @@ public class StandardUtils {
 
     private Activity activity;
 
+    private boolean isDebug = false;
+
     private StandardUtils() {
 
     }
@@ -41,6 +43,14 @@ public class StandardUtils {
     public static void initialize(Application application) {
         utils = new StandardUtils();
         utils.application = application;
+    }
+
+    /**
+     * 设定是否为 Debug 模式
+     * @param isDebug true 则为 Debug 模式，可直接传入项目的 {@link BuildConfig#DEBUG}
+     */
+    public static void setDebug(boolean isDebug) {
+        utils.isDebug = isDebug;
     }
 
     /**
@@ -57,7 +67,7 @@ public class StandardUtils {
      * @param message log 的内容
      */
     public static void log(CharSequence message) {
-        if (BuildConfig.DEBUG) {
+        if (utils.isDebug) {
             Log.d(utils.activity.getLocalClassName(), message.toString());
         }
     }
@@ -68,19 +78,19 @@ public class StandardUtils {
      * @param message log 的内容
      */
     public static void log(CharSequence tag, CharSequence message) {
-        if (BuildConfig.DEBUG) {
+        if (utils.isDebug) {
             Log.d(tag.toString(), message.toString());
         }
     }
 
     /**
      * 对异常打印调用栈
-     * @param e 需要打印调用栈的异常
+     * @param t 需要打印调用栈的异常
      */
-    public static void printStack(Exception e) {
-        if (BuildConfig.DEBUG) {
-            Log.d(e.getClass().getSimpleName(), e.getMessage());
-            e.printStackTrace();
+    public static void printStack(Throwable t) {
+        if (utils.isDebug) {
+            Log.d(t.getClass().getSimpleName(), t.getMessage());
+            t.printStackTrace();
         }
     }
 

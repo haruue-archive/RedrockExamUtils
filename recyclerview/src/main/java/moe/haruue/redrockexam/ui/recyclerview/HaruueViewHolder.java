@@ -31,4 +31,8 @@ public abstract class HaruueViewHolder<M> extends RecyclerView.ViewHolder {
         return itemView.getContext();
     }
 
+    public int getModelPosition() {
+        return getAdapterPosition() - 1;
+    }
+
 }

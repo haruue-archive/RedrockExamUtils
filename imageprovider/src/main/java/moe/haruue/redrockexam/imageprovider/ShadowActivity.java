@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -127,6 +128,19 @@ public class ShadowActivity extends AppCompatActivity {
         } else {
             resultUri = Uri.fromFile(new File(getExternalCacheDir(), fileName));
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (DocumentsContract.isDocumentUri(this, resultUri)) {
+                try {
+                    resultUri = Uri.fromFile(new File(DocumentUriUtils.getPath(this, resultUri)));
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    reportBug();
+                    ImageProvider.provider.listener.onImageProviderOperateFailure(new NullPointerException("can't get album return data"), ImageProvider.provider.requestCode);
+                    finish();
+                    return;
+                }
+            }
+        }
         ImageProvider.provider.listener.onImageProviderGetPhoto(resultUri, ImageProvider.provider.requestCode);
         finish();
     }
@@ -144,17 +158,22 @@ public class ShadowActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE_CROP);
         } catch (Exception e) {
             ImageProvider.provider.listener.onImageProviderOperateFailure(new ActivityNotFoundException("Crop image does not support by this device"), ImageProvider.provider.requestCode);
+            reportBug();
             finish();
         }
     }
 
     protected void onCropResult(int requestCode, int resultCode, Intent data) {
-        Bitmap bitmap = data.getExtras().getParcelable("data");
-        if (bitmap == null) {
-            ImageProvider.provider.listener.onImageProviderOperateFailure(new NullPointerException("Crop return empty data"), ImageProvider.provider.requestCode);
+        Uri uri;
+        if (data.getExtras() != null && data.getExtras().getParcelable("data") != null) {
+            Bitmap bitmap = data.getExtras().getParcelable("data");
+            uri = bitmapToUri(this, bitmap);
+        } else if (data.getData() != null) {
+            uri = data.getData();
+        } else {
+            ImageProvider.provider.listener.onImageProviderOperateFailure(new NullPointerException("can't get data from crop"), ImageProvider.provider.requestCode);
             return;
         }
-        Uri uri = bitmapToUri(this, bitmap);
         ImageProvider.provider.listener.onImageProviderGetPhoto(uri, ImageProvider.provider.requestCode);
         finish();
     }

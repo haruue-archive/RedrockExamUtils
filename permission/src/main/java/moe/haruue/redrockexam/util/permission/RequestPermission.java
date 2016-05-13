@@ -2,8 +2,11 @@ package moe.haruue.redrockexam.util.permission;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Arrays;
@@ -43,6 +46,21 @@ public class RequestPermission {
      */
     public void requestPermission(RequestPermissionListener listener, String...permissions) {
         if (Build.VERSION.SDK_INT >= 23) {
+            // 如果已经获取了所有的所需权限，就无需再请求了
+            boolean hasAllPermissionGranted = true;
+            for (String p: permissions) {
+                if (ContextCompat.checkSelfPermission(context, p) != PackageManager.PERMISSION_GRANTED) {
+                    Log.d("permission", "Permission Haven't ganted");
+                    hasAllPermissionGranted = false;
+                    break;
+                }
+            }
+            if (hasAllPermissionGranted) {
+                listener.onPermissionGranted(permissions);
+                reset();
+                return;
+            }
+            // 请求权限
             this.listener = listener;
             Intent intent = new Intent(context, ShadowActivity.class);
             intent.putExtra("permissions", permissions);

@@ -2,6 +2,7 @@ package moe.haruue.redrockexam.util.test;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import moe.haruue.redrockexam.util.StandardUtils;
 import moe.haruue.redrockexam.util.abstracts.HaruueApplication;
 import moe.haruue.redrockexam.util.database.DatabaseInfo;
 import moe.haruue.redrockexam.util.database.DatabaseUtils;
@@ -17,6 +18,9 @@ public class App extends HaruueApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Set Debug
+        StandardUtils.setDebug(BuildConfig.DEBUG);
 
         // Test database
         DatabaseUtils.initialize(this);
