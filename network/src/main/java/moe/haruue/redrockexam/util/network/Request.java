@@ -31,7 +31,7 @@ import java.util.Map;
 public class Request {
 
     String url;
-    Map<String, Object> param;
+    Map<String, ?> param;
     String method;
     NetworkConfiguration configuration;
 
@@ -40,7 +40,7 @@ public class Request {
      * @param url 请求 URL
      * @param param 请求参数
      */
-    public Request(String url, Map<String, Object> param) {
+    public Request(String url, Map<String, ?> param) {
         this.url = url;
         this.param = param;
         this.configuration = NetworkUtils.getInstance().defaultConfiguration;
@@ -53,21 +53,21 @@ public class Request {
      * @param param 请求参数
      * @param configuration
      */
-    public Request(String url, Map<String, Object> param, NetworkConfiguration configuration) {
+    public Request(String url, Map<String, ?> param, NetworkConfiguration configuration) {
         this.url = url;
         this.param = param;
         this.configuration = configuration;
         this.method = configuration.getRequestMethod();
     }
 
-    public Request(String url, Map<String, Object> param, String method) {
+    public Request(String url, Map<String, ?> param, String method) {
         this.url = url;
         this.param = param;
         this.method = method;
         configuration = NetworkUtils.getInstance().defaultConfiguration;
     }
 
-    public Request(String url, Map<String, Object> param, String method, NetworkConfiguration configuration) {
+    public Request(String url, Map<String, ?> param, String method, NetworkConfiguration configuration) {
         this.url = url;
         this.param = param;
         this.method = method;
@@ -234,7 +234,7 @@ public class Request {
      * @param paramMap 要转换的键值映射
      * @return x-www-form-urlencoded 字符串
      */
-    private String paramMapToString(Map<String, Object> paramMap) {
+    private String paramMapToString(Map<String, ?> paramMap) {
         if (paramMap == null || paramMap.isEmpty()) {
             return "";
         }
