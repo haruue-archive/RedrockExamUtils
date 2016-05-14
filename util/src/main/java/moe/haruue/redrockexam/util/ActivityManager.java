@@ -96,7 +96,7 @@ public class ActivityManager {
     /**
      * 结束所有的 Activity 并退出程序
      */
-    public static void ExitApplication() {
+    public static void exitApplication() {
         finishAllActivity();
         System.exit(0);
     }
