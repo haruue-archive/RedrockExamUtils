@@ -2,7 +2,7 @@ package moe.haruue.redrockexam.util;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Handler;
 
 import java.util.HashMap;
