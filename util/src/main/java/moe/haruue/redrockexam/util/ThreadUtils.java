@@ -24,6 +24,9 @@ public class ThreadUtils {
     private Map<Thread, Activity> activityThreadMap;
     private Map<Thread, Fragment> fragmentThreadMap;
 
+    private final static Object activityMapLock = new Object();
+    private final static Object fragmentMapLock = new Object();
+
     private ThreadUtils() {
 
     }
@@ -60,7 +63,9 @@ public class ThreadUtils {
      */
     public static Thread runOnNewThread(Activity activity, Runnable runnable) {
         Thread thread = runOnNewThread(runnable);
-        utils.activityThreadMap.put(thread, activity);
+        synchronized (activityMapLock) {
+            utils.activityThreadMap.put(thread, activity);
+        }
         return thread;
     }
 
@@ -73,7 +78,9 @@ public class ThreadUtils {
      */
     public static Thread runOnNewThread(Fragment fragment, Runnable runnable) {
         Thread thread = runOnNewThread(runnable);
-        utils.fragmentThreadMap.put(thread, fragment);
+        synchronized (fragmentMapLock) {
+            utils.fragmentThreadMap.put(thread, fragment);
+        }
         return thread;
     }
 
@@ -90,14 +97,16 @@ public class ThreadUtils {
      * @param activity 对应 Activity 的 this 引用
      */
     public static void onActivityDestroy(Activity activity) {
-        for (Thread i: utils.activityThreadMap.keySet()) {
-            if (utils.activityThreadMap.get(i).equals(activity)) {
-                try {
-                    i.interrupt();
-                } catch (Exception e) {
-                    e.printStackTrace();
+        synchronized (activityMapLock) {
+            for (Thread i : utils.activityThreadMap.keySet()) {
+                if (utils.activityThreadMap.get(i).equals(activity)) {
+                    try {
+                        i.interrupt();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    utils.activityThreadMap.remove(i);
                 }
-                utils.activityThreadMap.remove(i);
             }
         }
     }
@@ -107,14 +116,16 @@ public class ThreadUtils {
      * @param fragment 对应 Fragment 的 this 引用
      */
     public static void onFragmentDestroy(Fragment fragment) {
-        for (Thread i: utils.fragmentThreadMap.keySet()) {
-            if (utils.fragmentThreadMap.get(i).equals(fragment)) {
-                try {
-                    i.interrupt();
-                } catch (Exception e) {
-                    e.printStackTrace();
+        synchronized (fragmentMapLock) {
+            for (Thread i : utils.fragmentThreadMap.keySet()) {
+                if (utils.fragmentThreadMap.get(i).equals(fragment)) {
+                    try {
+                        i.interrupt();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    utils.fragmentThreadMap.remove(i);
                 }
-                utils.fragmentThreadMap.remove(i);
             }
         }
     }
