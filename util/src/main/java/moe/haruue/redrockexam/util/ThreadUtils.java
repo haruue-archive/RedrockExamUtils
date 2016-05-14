@@ -6,7 +6,9 @@ import android.app.Fragment;
 import android.os.Handler;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 线程管理器<br>
@@ -98,14 +100,15 @@ public class ThreadUtils {
      */
     public static void onActivityDestroy(Activity activity) {
         synchronized (activityMapLock) {
-            for (Thread i : utils.activityThreadMap.keySet()) {
-                if (utils.activityThreadMap.get(i).equals(activity)) {
+            Set<Map.Entry<Thread, Activity>> entrySet = new HashSet(utils.activityThreadMap.entrySet());
+            for (Map.Entry<Thread, Activity> entry: entrySet) {
+                if (entry.getValue().equals(activity)) {
                     try {
-                        i.interrupt();
+                        entry.getKey().interrupt();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    utils.activityThreadMap.remove(i);
+                    utils.activityThreadMap.remove(entry.getKey());
                 }
             }
         }
@@ -117,14 +120,15 @@ public class ThreadUtils {
      */
     public static void onFragmentDestroy(Fragment fragment) {
         synchronized (fragmentMapLock) {
-            for (Thread i : utils.fragmentThreadMap.keySet()) {
-                if (utils.fragmentThreadMap.get(i).equals(fragment)) {
+            Set<Map.Entry<Thread, Fragment>> entrySet = new HashSet(utils.fragmentThreadMap.entrySet());
+            for (Map.Entry<Thread, Fragment> entry: entrySet) {
+                if (entry.getValue().equals(fragment)) {
                     try {
-                        i.interrupt();
+                        entry.getKey().interrupt();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    utils.fragmentThreadMap.remove(i);
+                    utils.fragmentThreadMap.remove(entry.getKey());
                 }
             }
         }
