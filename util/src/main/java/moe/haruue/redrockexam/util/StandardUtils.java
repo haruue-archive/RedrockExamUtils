@@ -89,7 +89,7 @@ public class StandardUtils {
      */
     public static void printStack(Throwable t) {
         if (utils.isDebug) {
-            Log.d(t.getClass().getSimpleName(), t.getMessage());
+            Log.d(defaultObject(t.getClass().getSimpleName(), ""), defaultObject(t.getMessage(), ""));
             t.printStackTrace();
         }
     }
